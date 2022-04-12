@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="gJkJBC" name="PolySynthTemplate" projectType="audioplug"
+              useAppConfig="0" addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1"
+              pluginCharacteristicsValue="pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn">
+  <MAINGROUP id="mZjZGl" name="PolySynthTemplate">
+    <GROUP id="{73660195-7CF9-9899-71E3-04FC2EBEF58A}" name="Source">
+      <FILE id="os7ZNO" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="CFno2S" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+      <FILE id="h51ur6" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="sVNEpH" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="aClmZL" name="Synthesizer.cpp" compile="1" resource="0" file="Source/Synthesizer.cpp"/>
+      <FILE id="CVO8qT" name="Synthesizer.h" compile="0" resource="0" file="Source/Synthesizer.h"/>
+      <FILE id="g0ShUX" name="Voice.cpp" compile="1" resource="0" file="Source/Voice.cpp"/>
+      <FILE id="biYlUn" name="Voice.h" compile="0" resource="0" file="Source/Voice.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <VS2019 targetFolder="Builds/VisualStudio2019">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="PolySynthTemplate"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="PolySynthTemplate"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../../../Masters/Audio Programming 2/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../Masters/Audio Programming 2/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../../Masters/Audio Programming 2/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../../Masters/Audio Programming 2/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../../Masters/Audio Programming 2/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../Masters/Audio Programming 2/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../../Masters/Audio Programming 2/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../Masters/Audio Programming 2/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../Masters/Audio Programming 2/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../Masters/Audio Programming 2/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../Masters/Audio Programming 2/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../Masters/Audio Programming 2/JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2019>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+</JUCERPROJECT>
