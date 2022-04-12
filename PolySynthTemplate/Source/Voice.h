@@ -9,3 +9,11 @@
 */
 
 #pragma once
+#include "Oscillator.h"
+class VoiceClass
+{
+private:
+    OscillatorClass Oscillator;
+public:
+    float voiceProcess();
+};
