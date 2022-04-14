@@ -24,11 +24,15 @@ private:
     float sampleRate;
     float index = 0.0f;
     float indexIncrement = 0.0f;
+    float linearInterpolate();
 
 public:
     OscillatorClass(float samplerate);
+    OscillatorClass() = default;
     float oscillatorProcess();
     void setFrequency(float frequency);
-    float linearInterpolate();
+    void setSampleRate(float newValue) { sampleRate = newValue; }
+    void stop();
+    bool isPlaying();
 
 };

@@ -14,12 +14,16 @@
 class SynthesizerClass
 {
 private:
-    void processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages);
-    VoiceClass voices[8];
-
-
+    
+    VoiceClass voices{ sampleRate };
+    float sampleRate;
+    void handleMidiEvent(const juce::MidiMessage& midiEvent);
+    void render(juce::AudioBuffer<float>& buffer, int startSample, int endSample);
 public:
-
+    SynthesizerClass(float samplerate);
+    SynthesizerClass() = default;
+    void processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages);
+    void prepareToPlay(double samplerate);
 
 
 

@@ -10,10 +10,22 @@
 
 #pragma once
 #include "Oscillator.h"
+#include "ADSR.h"
 class VoiceClass
 {
 private:
-    OscillatorClass Oscillator;
+    OscillatorClass oscillator{ sampleRate };
+    ADSRClass ampEnvelope{ sampleRate };
+    float midiNoteToHz(int midiNote);
+    float sampleRate;
 public:
+    VoiceClass (float samplerate);
+    VoiceClass() = default;
     float voiceProcess();
+    void newNote(int midiNote);
+    void noteRelease();
+    bool isPlaying();
+    void setSampleRate(float newValue) { sampleRate = newValue; oscillator.setSampleRate(sampleRate); ampEnvelope.setSampleRate(sampleRate); }
+    void prepareToPlay();
+
 };

@@ -33,7 +33,7 @@ float OscillatorClass::oscillatorProcess()
     float sample = linearInterpolate();
     index += indexIncrement;
     index = std::fmod(index, static_cast<float>(WAVETABLE_LENGTH));
-
+    return sample;
 }
 
 float OscillatorClass::linearInterpolate()
@@ -44,4 +44,15 @@ float OscillatorClass::linearInterpolate()
     const auto truncatedIndexWeight = 1.0f - nextIndexWeight;
 
     return truncatedIndexWeight * wavetable[truncatedIndex] + nextIndexWeight * wavetable[nextIndex];
+}
+
+void OscillatorClass::stop()
+{
+    index = 0;
+    indexIncrement = 0;
+}
+
+bool OscillatorClass::isPlaying()
+{
+    return indexIncrement != 0;
 }

@@ -9,7 +9,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-
+#include "Synthesizer.h"
 //==============================================================================
 /**
 */
@@ -55,5 +55,6 @@ public:
 
 private:
     //==============================================================================
+    SynthesizerClass synthesizer{ static_cast<float>(this->getSampleRate()) };
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PolySynthTemplateAudioProcessor)
 };
