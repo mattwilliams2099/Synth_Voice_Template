@@ -12,14 +12,52 @@
 
 OscillatorClass::OscillatorClass(float samplerate) : sampleRate(samplerate)
 {
-    fillWavetable();
+    fillWavetable(square);
 }
 
-void OscillatorClass::fillWavetable()
+void OscillatorClass::fillWavetable(waveShape shape)
 {
-    for (int i = 0; i < WAVETABLE_LENGTH; i++)
+    std::fill_n(wavetable, WAVETABLE_LENGTH, 0.0f);
+    const float sawIncrement = 2.0f / static_cast<float>(WAVETABLE_LENGTH);
+    float sawCounter = -1.0f;
+    float triIncrement = 4.0f / static_cast<float>(WAVETABLE_LENGTH);
+    float triCounter = 0.0f;
+    switch (shape)
     {
-        wavetable[i] = sin((2 * M_PI * static_cast<float>(i)) / static_cast<float>(WAVETABLE_LENGTH));
+    case sine:
+        for (int i = 0; i < WAVETABLE_LENGTH; i++)
+        {
+            wavetable[i] = sin((2 * M_PI * static_cast<float>(i)) / static_cast<float>(WAVETABLE_LENGTH));
+        }
+        break;
+    
+    case saw:
+        for (int i = 0; i < WAVETABLE_LENGTH; i++)
+        {
+            sawCounter += sawIncrement;
+            wavetable[i] = sawCounter;// +sawIncrement;
+        }
+        break;
+
+    case triangle:
+        for (int i = 0; i < WAVETABLE_LENGTH; i++)
+        {
+            if (i == WAVETABLE_LENGTH / 4 || i == (WAVETABLE_LENGTH / 4) * 3)
+                triIncrement = (-triIncrement);
+            triCounter += triIncrement;
+            wavetable[i] = triCounter;
+        }
+        break;
+
+    case square:
+        for (int i = 0; i < WAVETABLE_LENGTH; i++)
+        {
+            if (i < WAVETABLE_LENGTH / 2)
+                wavetable[i] = 1.0f;
+            else
+                wavetable[i] = -1.0f;
+        }
+        break;
     }
 }
 

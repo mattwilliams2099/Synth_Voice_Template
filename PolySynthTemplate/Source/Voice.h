@@ -27,7 +27,7 @@ public:
     void newNote(int midiNote);
     void noteRelease();
     bool isPlaying();
-    void setSampleRate(float newValue);// { sampleRate = newValue; oscillator.setSampleRate(sampleRate); ampEnvelope.setSampleRate(sampleRate); }
+    void setSampleRate(float newValue);
     void prepareToPlay();
 
 };

@@ -19,7 +19,8 @@ class OscillatorClass
 {
 private:
     float wavetable[WAVETABLE_LENGTH];
-    void fillWavetable();
+    enum waveShape {sine, saw, triangle, square};
+    void fillWavetable(waveShape);
 
     float sampleRate;
     float index = 0.0f;

@@ -61,7 +61,6 @@ void VoiceClass::setSampleRate(float newValue)
     oscillator.setSampleRate (sampleRate); 
     ampEnvelope.setSampleRate (sampleRate); 
     LPF.setSampleRate (sampleRate);
-
 }
 
 
