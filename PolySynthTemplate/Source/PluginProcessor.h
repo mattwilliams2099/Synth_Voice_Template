@@ -56,5 +56,16 @@ public:
 private:
     //==============================================================================
     SynthesizerClass synthesizer{ static_cast<float>(this->getSampleRate()) };
+    juce::AudioProcessorValueTreeState parameters;
+    std::atomic<float>* shapeParameter = nullptr;
+
+    std::atomic<float>* cutoffParameter = nullptr;
+    std::atomic<float>* resonanceParameter = nullptr;
+
+    std::atomic<float>* attackParameter = nullptr;
+    std::atomic<float>* decayParameter = nullptr;
+    std::atomic<float>* sustainParameter = nullptr;
+    std::atomic<float>* releaseParameter = nullptr;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PolySynthTemplateAudioProcessor)
 };

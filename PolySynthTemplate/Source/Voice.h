@@ -30,4 +30,12 @@ public:
     void setSampleRate(float newValue);
     void prepareToPlay();
 
+    void setOsc1Shape(int newValue) { oscillator.setWaveShape(newValue); }
+
+    void setFilter(float newCutoff, float newResonance) { LPF.setLowPassCo(newCutoff, newResonance); }
+
+    void setAmpAttack(int newValue) { ampEnvelope.setAttack(newValue); }
+    void setAmpDecay(int newValue) { ampEnvelope.setDecay(newValue); }
+    void setAmpSustain(float newValue) { ampEnvelope.setSustain(newValue); }
+    void setAmpRelease(int newValue) { ampEnvelope.setRelease(newValue); }
 };

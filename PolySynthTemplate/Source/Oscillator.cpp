@@ -12,10 +12,10 @@
 
 OscillatorClass::OscillatorClass(float samplerate) : sampleRate(samplerate)
 {
-    fillWavetable(square);
+    //fillWavetable(square);
 }
 
-void OscillatorClass::fillWavetable(waveShape shape)
+void OscillatorClass::fillWavetable(int shape)
 {
     std::fill_n(wavetable, WAVETABLE_LENGTH, 0.0f);
     const float sawIncrement = 2.0f / static_cast<float>(WAVETABLE_LENGTH);
@@ -24,14 +24,14 @@ void OscillatorClass::fillWavetable(waveShape shape)
     float triCounter = 0.0f;
     switch (shape)
     {
-    case sine:
+    case 0:
         for (int i = 0; i < WAVETABLE_LENGTH; i++)
         {
             wavetable[i] = sin((2 * M_PI * static_cast<float>(i)) / static_cast<float>(WAVETABLE_LENGTH));
         }
         break;
     
-    case saw:
+    case 1:
         for (int i = 0; i < WAVETABLE_LENGTH; i++)
         {
             sawCounter += sawIncrement;
@@ -39,7 +39,7 @@ void OscillatorClass::fillWavetable(waveShape shape)
         }
         break;
 
-    case triangle:
+    case 2:
         for (int i = 0; i < WAVETABLE_LENGTH; i++)
         {
             if (i == WAVETABLE_LENGTH / 4 || i == (WAVETABLE_LENGTH / 4) * 3)
@@ -49,7 +49,7 @@ void OscillatorClass::fillWavetable(waveShape shape)
         }
         break;
 
-    case square:
+    case 3:
         for (int i = 0; i < WAVETABLE_LENGTH; i++)
         {
             if (i < WAVETABLE_LENGTH / 2)

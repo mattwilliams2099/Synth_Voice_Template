@@ -19,9 +19,26 @@ PolySynthTemplateAudioProcessor::PolySynthTemplateAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ), parameters(*this, nullptr, juce::Identifier("delayValueTree"),
+                           {
+                                std::make_unique<juce::AudioParameterInt>   ("SHAPE",       "Shape",    0,      3,          0),
+                                std::make_unique<juce::AudioParameterFloat> ("CUTOFF",      "Cutoff",   0.1f,   20000.0f,   20000.0f),
+                                std::make_unique<juce::AudioParameterFloat> ("RESONANCE",   "Resonance",0.001f, 8.0f,       1.0f),
+                                std::make_unique<juce::AudioParameterInt>   ("ATTACK",      "Attack",   1,      2000,       500),
+                                std::make_unique<juce::AudioParameterInt>   ("DECAY",       "Decay",    1,      2000,       500),
+                                std::make_unique<juce::AudioParameterFloat> ("SUSTAIN",     "Sustain",  0.0f,   1.0f,       0.5f),
+                                std::make_unique<juce::AudioParameterInt>   ("RELEASE",     "Release",  1,      2000,       500)
+                           })
 #endif
 {
+    shapeParameter = parameters.getRawParameterValue("SHAPE");
+    cutoffParameter = parameters.getRawParameterValue("CUTOFF");
+    resonanceParameter = parameters.getRawParameterValue("RESONANCE");
+    attackParameter = parameters.getRawParameterValue("ATTACK");
+    decayParameter = parameters.getRawParameterValue("DECAY");
+    sustainParameter = parameters.getRawParameterValue("SUSTAIN");
+    releaseParameter = parameters.getRawParameterValue("RELEASE");
+
 }
 
 PolySynthTemplateAudioProcessor::~PolySynthTemplateAudioProcessor()
@@ -132,6 +149,13 @@ void PolySynthTemplateAudioProcessor::processBlock (juce::AudioBuffer<float>& bu
 {
     juce::ScopedNoDenormals noDenormals;
     buffer.clear();
+
+    synthesizer.setOsc1Shape(*shapeParameter);
+    synthesizer.setFilter(*cutoffParameter, *resonanceParameter);
+    synthesizer.setAmpAttack(*attackParameter);
+    synthesizer.setAmpDecay(*decayParameter);
+    synthesizer.setAmpSustain(*sustainParameter);
+    synthesizer.setAmpRelease(*releaseParameter);
     synthesizer.processBlock(buffer, midiMessages);
 }
 
@@ -143,7 +167,7 @@ bool PolySynthTemplateAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* PolySynthTemplateAudioProcessor::createEditor()
 {
-    return new PolySynthTemplateAudioProcessorEditor (*this);
+    return new PolySynthTemplateAudioProcessorEditor (*this, parameters);
 }
 
 //==============================================================================

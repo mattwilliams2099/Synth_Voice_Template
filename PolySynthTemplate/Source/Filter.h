@@ -21,6 +21,8 @@ private:
     float xz[2][2] = { { 0.0f, 0.0f }, {0.0f, 0.0f} };
     float yz[2][2] = { { 0.0f, 0.0f }, {0.0f, 0.0f} };
     float sampleRate;
+    float cutoff;
+    float resonance;
 
 public:
     FilterClass(float sampleFreq = 48000);

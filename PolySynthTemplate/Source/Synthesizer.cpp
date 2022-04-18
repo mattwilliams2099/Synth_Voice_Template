@@ -17,9 +17,11 @@ SynthesizerClass::SynthesizerClass(float samplerate) : sampleRate(samplerate)
 
 void SynthesizerClass::prepareToPlay(double samplerate)
 {
-    voices.setSampleRate(static_cast<float>(samplerate));
-    //voices.ampEnvelope.setAttack(2000);
-    voices.prepareToPlay();
+    for (VoiceClass voice : voices)
+    {
+        voice.setSampleRate(static_cast<float>(samplerate));
+        voice.prepareToPlay();
+    }
 }
 
 
@@ -47,13 +49,28 @@ void SynthesizerClass::handleMidiEvent(const juce::MidiMessage& midiEvent)
     {
         //const auto oscillatorId = midiEvent.getNoteNumber();
         //const auto frequency = midiToHz(oscillatorId);
-        voices.newNote(static_cast<int>(midiEvent.getNoteNumber()));
+        for (int i = 0; i < NUM_VOICES; i++)
+        {
+            if (voices[i].isPlaying() == false)
+            {
+                voices[i].newNote(static_cast<int>(midiEvent.getNoteNumber()));
+                activeNoteID[i] = static_cast<int>(midiEvent.getNoteNumber());
+                break;
+            }
+        }
     }
     else if (midiEvent.isNoteOff())
     {
         //const auto oscillatorId = midiEvent.getNoteNumber();
         //oscillators[oscillatorId].stop();
-        voices.noteRelease();
+        for (int i = 0; i < NUM_VOICES; i++)
+        {
+            if (activeNoteID[i] == static_cast<int>(midiEvent.getNoteNumber()))
+            {
+                voices[i].noteRelease();
+                break;
+            }
+        }
     }
     /*else if (midiEvent.isAllNotesOff())
     {
@@ -69,16 +86,16 @@ void SynthesizerClass::handleMidiEvent(const juce::MidiMessage& midiEvent)
 void SynthesizerClass::render(juce::AudioBuffer<float>& buffer, int startSample, int endSample)
 {
     auto* firstChannel = buffer.getWritePointer(0);
-    //for (auto& oscillator : oscillators)
-    //{
-        if (voices.isPlaying())
+    for (VoiceClass voice : voices)
+    {
+        if (voice.isPlaying())
         {
             for (auto sample = startSample; sample < endSample; ++sample)
             {
-                firstChannel[sample] += voices.voiceProcess();
+                firstChannel[sample] += voice.voiceProcess();
             }
         }
-    //}
+    }
 
     for (auto channel = 1; channel < buffer.getNumChannels(); channel++)
     {
