@@ -20,6 +20,8 @@
       <FILE id="TrM3B7" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>
       <FILE id="VfrPPD" name="ADSR.cpp" compile="1" resource="0" file="Source/ADSR.cpp"/>
       <FILE id="GFTJ64" name="ADSR.h" compile="0" resource="0" file="Source/ADSR.h"/>
+      <FILE id="plF5eM" name="Filter.cpp" compile="1" resource="0" file="Source/Filter.cpp"/>
+      <FILE id="eeDijg" name="Filter.h" compile="0" resource="0" file="Source/Filter.h"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
