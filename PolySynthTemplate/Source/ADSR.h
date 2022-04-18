@@ -21,8 +21,13 @@ private:
     float output = 0.0f;
     float attackIncrement;
     float releaseIncrement;
+    float decayIncrement;
     float millisecondsToSamples(float milliseconds);
     float sampleRate;
+    bool attackStage;
+    bool decayStage;
+    bool sustainStage;
+    bool releaseStage;
 
 public:
     ADSRClass(float samplerate);
@@ -32,6 +37,8 @@ public:
     float ADSRProcess();
     bool isActive();
     void setAttack(int newAttack);
+    void setDecay(int newDecay);
+    void setSustain(float newSustain);
     void setRelease(int newRelease);
     void setSampleRate(float samplerate) { sampleRate = samplerate; }
 };

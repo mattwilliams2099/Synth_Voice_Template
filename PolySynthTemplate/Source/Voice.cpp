@@ -49,5 +49,7 @@ void VoiceClass::prepareToPlay()
 {
     ampEnvelope.setAttack(2000);
     ampEnvelope.setRelease(2000);
+    ampEnvelope.setDecay(2000);
+    ampEnvelope.setSustain(0.5f);
 }
 
