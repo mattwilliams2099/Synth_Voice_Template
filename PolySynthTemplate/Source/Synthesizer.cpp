@@ -17,11 +17,11 @@ SynthesizerClass::SynthesizerClass(float samplerate) : sampleRate(samplerate)
 
 void SynthesizerClass::prepareToPlay(double samplerate)
 {
-    for (VoiceClass voice : voices)
-    {
-        voice.setSampleRate(static_cast<float>(samplerate));
-        voice.prepareToPlay();
-    }
+    //for (VoiceClass voice : voices)
+    //{
+        voices.setSampleRate(static_cast<float>(samplerate));
+        voices.prepareToPlay();
+    //}
 }
 
 
@@ -49,28 +49,28 @@ void SynthesizerClass::handleMidiEvent(const juce::MidiMessage& midiEvent)
     {
         //const auto oscillatorId = midiEvent.getNoteNumber();
         //const auto frequency = midiToHz(oscillatorId);
-        for (int i = 0; i < NUM_VOICES; i++)
-        {
-            if (voices[i].isPlaying() == false)
-            {
-                voices[i].newNote(static_cast<int>(midiEvent.getNoteNumber()));
-                activeNoteID[i] = static_cast<int>(midiEvent.getNoteNumber());
-                break;
-            }
-        }
+        //for (int i = 0; i < NUM_VOICES; i++)
+        //{
+            //if (voices.isPlaying() == false)
+            //{
+                voices.newNote(static_cast<int>(midiEvent.getNoteNumber()));
+                //activeNoteID[i] = static_cast<int>(midiEvent.getNoteNumber());
+                //break;
+            //}
+        //}
     }
     else if (midiEvent.isNoteOff())
     {
         //const auto oscillatorId = midiEvent.getNoteNumber();
         //oscillators[oscillatorId].stop();
-        for (int i = 0; i < NUM_VOICES; i++)
-        {
-            if (activeNoteID[i] == static_cast<int>(midiEvent.getNoteNumber()))
-            {
-                voices[i].noteRelease();
-                break;
-            }
-        }
+        //for (int i = 0; i < NUM_VOICES; i++)
+        //{
+            //if (activeNoteID[i] == static_cast<int>(midiEvent.getNoteNumber()))
+            //{
+                voices.noteRelease();
+            //    break;
+            //}
+       // }
     }
     /*else if (midiEvent.isAllNotesOff())
     {
@@ -86,16 +86,16 @@ void SynthesizerClass::handleMidiEvent(const juce::MidiMessage& midiEvent)
 void SynthesizerClass::render(juce::AudioBuffer<float>& buffer, int startSample, int endSample)
 {
     auto* firstChannel = buffer.getWritePointer(0);
-    for (VoiceClass voice : voices)
-    {
-        if (voice.isPlaying())
+    //for (VoiceClass voice : voices)
+    //{
+        if (voices.isPlaying())
         {
             for (auto sample = startSample; sample < endSample; ++sample)
             {
-                firstChannel[sample] += voice.voiceProcess();
+                firstChannel[sample] += voices.voiceProcess();
             }
         }
-    }
+    //}
 
     for (auto channel = 1; channel < buffer.getNumChannels(); channel++)
     {

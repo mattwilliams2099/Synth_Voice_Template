@@ -18,38 +18,43 @@ OscillatorClass::OscillatorClass(float samplerate) : sampleRate(samplerate)
 void OscillatorClass::fillWavetable(int shape)
 {
     std::fill_n(wavetable, WAVETABLE_LENGTH, 0.0f);
-    const float sawIncrement = 2.0f / static_cast<float>(WAVETABLE_LENGTH);
-    float sawCounter = -1.0f;
-    float triIncrement = 4.0f / static_cast<float>(WAVETABLE_LENGTH);
-    float triCounter = 0.0f;
+    //const float sawIncrement = 2.0f / static_cast<float>(WAVETABLE_LENGTH);
+    //float sawCounter = -1.0f;
+    //float triIncrement = 4.0f / static_cast<float>(WAVETABLE_LENGTH);
+    //float triCounter = 0.0f;
+    float increment;
+    float counter = 0.0f;
     switch (shape)
     {
-    case 0:
+    case 0: //Sine
         for (int i = 0; i < WAVETABLE_LENGTH; i++)
         {
             wavetable[i] = sin((2 * M_PI * static_cast<float>(i)) / static_cast<float>(WAVETABLE_LENGTH));
         }
         break;
     
-    case 1:
+    case 1: //Saw
+        counter = -1.0f;
+        increment = 2.0f / static_cast<float>(WAVETABLE_LENGTH);
         for (int i = 0; i < WAVETABLE_LENGTH; i++)
         {
-            sawCounter += sawIncrement;
-            wavetable[i] = sawCounter;// +sawIncrement;
+            counter += increment;
+            wavetable[i] = counter;
         }
         break;
 
-    case 2:
+    case 2: //Triangle
+        increment = 4.0f / static_cast<float>(WAVETABLE_LENGTH);
         for (int i = 0; i < WAVETABLE_LENGTH; i++)
         {
             if (i == WAVETABLE_LENGTH / 4 || i == (WAVETABLE_LENGTH / 4) * 3)
-                triIncrement = (-triIncrement);
-            triCounter += triIncrement;
-            wavetable[i] = triCounter;
+                increment = (-increment);
+            counter += increment;
+            wavetable[i] = counter;
         }
         break;
 
-    case 3:
+    case 3: //Square
         for (int i = 0; i < WAVETABLE_LENGTH; i++)
         {
             if (i < WAVETABLE_LENGTH / 2)
@@ -61,9 +66,10 @@ void OscillatorClass::fillWavetable(int shape)
     }
 }
 
-void OscillatorClass::setFrequency(float frequency)
+void OscillatorClass::setFrequency(float newFrequency)
 {
-    indexIncrement = frequency * static_cast<float>(WAVETABLE_LENGTH) / sampleRate;
+    frequency = newFrequency;
+    indexIncrement = (fineFreq * coarseFreq * frequency) * static_cast<float>(WAVETABLE_LENGTH) / sampleRate;
 }
 
 float OscillatorClass::oscillatorProcess()

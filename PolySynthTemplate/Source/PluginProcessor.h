@@ -57,7 +57,17 @@ private:
     //==============================================================================
     SynthesizerClass synthesizer{ static_cast<float>(this->getSampleRate()) };
     juce::AudioProcessorValueTreeState parameters;
-    std::atomic<float>* shapeParameter = nullptr;
+    std::atomic<float>* shape1Parameter = nullptr;
+    std::atomic<float>* osc1FineParameter = nullptr;
+    std::atomic<float>* osc1CoarseParameter = nullptr;
+
+    std::atomic<float>* shape2Parameter = nullptr;
+    std::atomic<float>* osc2FineParameter = nullptr;    
+    std::atomic<float>* osc2CoarseParameter = nullptr;    
+    
+    std::atomic<float>* shape3Parameter = nullptr;
+    std::atomic<float>* osc3FineParameter = nullptr;
+    std::atomic<float>* osc3CoarseParameter = nullptr;
 
     std::atomic<float>* cutoffParameter = nullptr;
     std::atomic<float>* resonanceParameter = nullptr;

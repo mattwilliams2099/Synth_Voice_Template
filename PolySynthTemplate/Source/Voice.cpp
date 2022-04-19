@@ -18,15 +18,18 @@ VoiceClass::VoiceClass (float samplerate) : sampleRate(samplerate)
 
 float VoiceClass::voiceProcess()
 {
-    float oscOutput = oscillator.oscillatorProcess();
-    float filterOutput = LPF.filterProcess(oscOutput, 0);
+    float oscOutput = oscillator[0].oscillatorProcess() + oscillator[1].oscillatorProcess() + oscillator[2].oscillatorProcess();
+    float filterOutput = LPF.filterProcess((oscOutput * 0.3), 0);
     float ampOutput = filterOutput * ampEnvelope.ADSRProcess();
     return ampOutput;
 }
 
 void VoiceClass::newNote (int midiNote)
 {
-    oscillator.setFrequency(midiNoteToHz (midiNote));
+    auto frequencyHz = midiNoteToHz(midiNote);
+    oscillator[0].setFrequency(frequencyHz);
+    oscillator[1].setFrequency(frequencyHz);
+    oscillator[2].setFrequency(frequencyHz);
     ampEnvelope.keyDown();
 }
 
@@ -37,7 +40,6 @@ float VoiceClass::midiNoteToHz (int midiNote)
 
 void VoiceClass::noteRelease()
 {
-    //oscillator.stop();
     ampEnvelope.keyUp();
 }
 
@@ -48,17 +50,15 @@ bool VoiceClass::isPlaying()
 
 void VoiceClass::prepareToPlay()
 {
-    ampEnvelope.setAttack (2000);
-    ampEnvelope.setRelease (2000);
-    ampEnvelope.setDecay (2000);
-    ampEnvelope.setSustain (0.5f);
-    LPF.setLowPassCo (500.0f, 3.0f);
+
 }
 
 void VoiceClass::setSampleRate(float newValue) 
 { 
     sampleRate = newValue; 
-    oscillator.setSampleRate (sampleRate); 
+    oscillator[0].setSampleRate (sampleRate); 
+    oscillator[1].setSampleRate(sampleRate);
+    oscillator[2].setSampleRate(sampleRate);
     ampEnvelope.setSampleRate (sampleRate); 
     LPF.setSampleRate (sampleRate);
 }

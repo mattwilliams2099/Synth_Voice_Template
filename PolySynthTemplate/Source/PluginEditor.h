@@ -30,9 +30,18 @@ private:
     PolySynthTemplateAudioProcessor& audioProcessor;
     juce::AudioProcessorValueTreeState& valueTreeState;
     
-    juce::Slider waveSlider;
-    juce::Slider fineSlider;
-    juce::Slider coarseSlider;
+    juce::Slider osc1ShapeSlider;
+    juce::Slider osc1FineSlider;
+    juce::Slider osc1CoarseSlider;
+    
+    juce::Slider osc2ShapeSlider;
+    juce::Slider osc2FineSlider;
+    juce::Slider osc2CoarseSlider;
+
+    juce::Slider osc3ShapeSlider;
+    juce::Slider osc3FineSlider;
+    juce::Slider osc3CoarseSlider;
+
     juce::Slider widthSlider;
     
     juce::Slider cutoffSlider;
@@ -43,7 +52,17 @@ private:
     juce::Slider sustainSlider;
     juce::Slider releaseSlider;
 
-    std::unique_ptr<SliderAttachment> waveAttachment;
+    std::unique_ptr<SliderAttachment> osc1ShapeAttachment;
+    std::unique_ptr<SliderAttachment> osc1FineAttachment;
+    std::unique_ptr<SliderAttachment> osc1CoarseAttachment;
+
+    std::unique_ptr<SliderAttachment> osc2ShapeAttachment;
+    std::unique_ptr<SliderAttachment> osc2FineAttachment;
+    std::unique_ptr<SliderAttachment> osc2CoarseAttachment;
+
+    std::unique_ptr<SliderAttachment> osc3ShapeAttachment;
+    std::unique_ptr<SliderAttachment> osc3FineAttachment;
+    std::unique_ptr<SliderAttachment> osc3CoarseAttachment;
 
     std::unique_ptr<SliderAttachment> cutoffAttachment;
     std::unique_ptr<SliderAttachment> resonanceAttachment;

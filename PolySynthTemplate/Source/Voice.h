@@ -12,10 +12,12 @@
 #include "Oscillator.h"
 #include "ADSR.h"
 #include "Filter.h"
+
+#define NUM_OSCILLATORS 3
 class VoiceClass
 {
 private:
-    OscillatorClass oscillator { sampleRate };
+    OscillatorClass oscillator[3] { sampleRate };
     ADSRClass ampEnvelope { sampleRate };
     FilterClass LPF { sampleRate };
     float midiNoteToHz(int midiNote);
@@ -30,7 +32,13 @@ public:
     void setSampleRate(float newValue);
     void prepareToPlay();
 
-    void setOsc1Shape(int newValue) { oscillator.setWaveShape(newValue); }
+    void setOscShape(int newValue, int oscNumber) { oscillator[oscNumber].setWaveShape(newValue); }
+    void setOscFine(float newValue, int oscNumber) { oscillator[oscNumber].setFineFreq(newValue); }
+    void setOscCoarse(float newValue, int oscNumber) { oscillator[oscNumber].setCoarseFreq(newValue); }
+
+
+    //void setOsc2Shape(int newValue) { oscillator[1].setWaveShape(newValue); }
+
 
     void setFilter(float newCutoff, float newResonance) { LPF.setLowPassCo(newCutoff, newResonance); }
 

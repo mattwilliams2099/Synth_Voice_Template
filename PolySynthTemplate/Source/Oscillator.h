@@ -19,23 +19,25 @@ class OscillatorClass
 {
 private:
     float wavetable[WAVETABLE_LENGTH];
-
-    void fillWavetable(int shape);
-
+    float fineFreq = 1.0f;
+    float coarseFreq = 1.0f;
+    float frequency;
     float sampleRate;
     float index = 0.0f;
     float indexIncrement = 0.0f;
     float linearInterpolate();
-
+    void fillWavetable (int shape);
 public:    
-    //enum waveShape {sine, saw, triangle, square};
-    OscillatorClass(float samplerate);
-    OscillatorClass() = default;
+    OscillatorClass (float samplerate = 44100.0f);
+    //OscillatorClass() = default;
     float oscillatorProcess();
-    void setFrequency(float frequency);
-    void setSampleRate(float newValue) { sampleRate = newValue; }
+    void setFrequency (float newFrequency);
+    void setSampleRate (float newValue)     { sampleRate = newValue; }
+    void setWaveShape (int waveShape)       { fillWavetable(waveShape); }    
+    void setFineFreq(float newFineFreq) { fineFreq = newFineFreq; setFrequency(frequency); }
+    void setCoarseFreq (float newCoarseFreq) { coarseFreq = newCoarseFreq; setFrequency(frequency); }
     void stop();
     bool isPlaying();
-    void setWaveShape(int waveShape) { fillWavetable(waveShape); }
+
 
 };

@@ -21,17 +21,40 @@ PolySynthTemplateAudioProcessor::PolySynthTemplateAudioProcessor()
                      #endif
                        ), parameters(*this, nullptr, juce::Identifier("delayValueTree"),
                            {
-                                std::make_unique<juce::AudioParameterInt>   ("SHAPE",       "Shape",    0,      3,          0),
-                                std::make_unique<juce::AudioParameterFloat> ("CUTOFF",      "Cutoff",   0.1f,   20000.0f,   20000.0f),
-                                std::make_unique<juce::AudioParameterFloat> ("RESONANCE",   "Resonance",0.001f, 8.0f,       1.0f),
-                                std::make_unique<juce::AudioParameterInt>   ("ATTACK",      "Attack",   1,      2000,       500),
-                                std::make_unique<juce::AudioParameterInt>   ("DECAY",       "Decay",    1,      2000,       500),
-                                std::make_unique<juce::AudioParameterFloat> ("SUSTAIN",     "Sustain",  0.0f,   1.0f,       0.5f),
-                                std::make_unique<juce::AudioParameterInt>   ("RELEASE",     "Release",  1,      2000,       500)
+                                std::make_unique<juce::AudioParameterInt>   ("SHAPE_1",     "Osc 1 Shape",  0,      3,          0),
+                                std::make_unique<juce::AudioParameterFloat> ("FINE_1",      "Osc 1 Fine",   0.5f,   2.0f,       1.0f),
+                                std::make_unique<juce::AudioParameterFloat> ("COARSE_1",    "Osc 1 Coarse", 0.125f, 8.0f,       1.0f),
+
+                                std::make_unique<juce::AudioParameterInt>   ("SHAPE_2",     "Osc 2 Shape",  0,      3,          0),
+                                std::make_unique<juce::AudioParameterFloat> ("FINE_2",      "Osc 2 Fine",   0.5f,   2.0f,       1.0f),
+                                std::make_unique<juce::AudioParameterFloat> ("COARSE_2",    "Osc 2 Coarse", 0.125f, 8.0f,       1.0f),
+
+                                std::make_unique<juce::AudioParameterInt>   ("SHAPE_3",     "Osc 3 Shape",  0,      3,          0),
+                                std::make_unique<juce::AudioParameterFloat> ("FINE_3",      "Osc 3 Fine",   0.5f,   2.0f,       1.0f),
+                                std::make_unique<juce::AudioParameterFloat> ("COARSE_3",    "Osc 3 Coarse", 0.125f, 8.0f,       1.0f),
+
+                                std::make_unique<juce::AudioParameterFloat> ("CUTOFF",      "Cutoff",       10.0f,  20000.0f,   20000.0f),
+                                std::make_unique<juce::AudioParameterFloat> ("RESONANCE",   "Resonance",    0.1f,   8.0f,       1.0f),
+
+                                std::make_unique<juce::AudioParameterInt>   ("ATTACK",      "Attack",       1,      1000,       500),
+                                std::make_unique<juce::AudioParameterInt>   ("DECAY",       "Decay",        1,      1000,       500),
+                                std::make_unique<juce::AudioParameterFloat> ("SUSTAIN",     "Sustain",      0.0f,   1.0f,       0.5f),
+                                std::make_unique<juce::AudioParameterInt>   ("RELEASE",     "Release",      1,      1000,       500)
                            })
 #endif
 {
-    shapeParameter = parameters.getRawParameterValue("SHAPE");
+    shape1Parameter = parameters.getRawParameterValue("SHAPE_1");
+    osc1FineParameter = parameters.getRawParameterValue("FINE_1");
+    osc1CoarseParameter = parameters.getRawParameterValue("COARSE_1");
+
+    shape2Parameter = parameters.getRawParameterValue("SHAPE_2");
+    osc2FineParameter = parameters.getRawParameterValue("FINE_2");
+    osc2CoarseParameter = parameters.getRawParameterValue("COARSE_2");
+
+    shape3Parameter = parameters.getRawParameterValue("SHAPE_3");
+    osc3FineParameter = parameters.getRawParameterValue("FINE_3");
+    osc3CoarseParameter = parameters.getRawParameterValue("COARSE_3");
+
     cutoffParameter = parameters.getRawParameterValue("CUTOFF");
     resonanceParameter = parameters.getRawParameterValue("RESONANCE");
     attackParameter = parameters.getRawParameterValue("ATTACK");
@@ -150,12 +173,25 @@ void PolySynthTemplateAudioProcessor::processBlock (juce::AudioBuffer<float>& bu
     juce::ScopedNoDenormals noDenormals;
     buffer.clear();
 
-    synthesizer.setOsc1Shape(*shapeParameter);
+    synthesizer.setOscShape(*shape1Parameter, 0);
+    synthesizer.setOscFineFreq(*osc1FineParameter, 0);
+    synthesizer.setOscCoarseFreq(*osc1CoarseParameter, 0);
+
+    synthesizer.setOscShape(*shape2Parameter, 1);
+    synthesizer.setOscFineFreq(*osc2FineParameter, 1);
+    synthesizer.setOscCoarseFreq(*osc2CoarseParameter, 1);
+
+    synthesizer.setOscShape(*shape3Parameter, 2);
+    synthesizer.setOscFineFreq(*osc3FineParameter, 2);
+    synthesizer.setOscCoarseFreq(*osc3CoarseParameter, 2);
+
     synthesizer.setFilter(*cutoffParameter, *resonanceParameter);
+
     synthesizer.setAmpAttack(*attackParameter);
     synthesizer.setAmpDecay(*decayParameter);
     synthesizer.setAmpSustain(*sustainParameter);
     synthesizer.setAmpRelease(*releaseParameter);
+
     synthesizer.processBlock(buffer, midiMessages);
 }
 

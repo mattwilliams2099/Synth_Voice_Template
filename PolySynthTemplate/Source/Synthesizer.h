@@ -17,7 +17,7 @@ class SynthesizerClass
 {
 private:
     
-    VoiceClass voices[NUM_VOICES]{ sampleRate };
+    VoiceClass voices{ sampleRate };
     float sampleRate;
     void handleMidiEvent(const juce::MidiMessage& midiEvent);
     void render(juce::AudioBuffer<float>& buffer, int startSample, int endSample);
@@ -28,40 +28,50 @@ public:
     void processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages);
     void prepareToPlay(double samplerate);
 
-    void setOsc1Shape(int newValue) 
+    void setOscShape(int newValue, int oscNumber) 
     { 
-        for(VoiceClass voice : voices)
-            voice.setOsc1Shape (newValue); 
+        //for(VoiceClass voice : voices)
+            voices.setOscShape (newValue, oscNumber); 
+    }
+
+    void setOscFineFreq(float newValue, int oscNumber)
+    {
+        voices.setOscFine(newValue, oscNumber);
+    }
+
+    void setOscCoarseFreq(float newValue, int oscNumber)
+    {
+        voices.setOscCoarse(newValue, oscNumber);
     }
 
     void setFilter(float newCutoff, float newResonance) 
     { 
-        for (VoiceClass voice : voices)
-            voice.setFilter(newCutoff, newResonance); 
+        //for (VoiceClass voice : voices)
+            voices.setFilter(newCutoff, newResonance); 
     }
     
     void setAmpAttack(int newValue) 
     {
-        for (VoiceClass voice : voices)
-            voice.setAmpAttack(newValue); 
+        //for (VoiceClass voice : voices)
+            voices.setAmpAttack(newValue); 
     }
 
     void setAmpDecay(int newValue) 
     {
-        for (VoiceClass voice : voices)
-            voice.setAmpDecay(newValue); 
+        //for (VoiceClass voice : voices)
+            voices.setAmpDecay(newValue); 
     }
 
     void setAmpSustain(float newValue) 
     {
-        for (VoiceClass voice : voices)
-            voice.setAmpSustain(newValue); 
+        //for (VoiceClass voice : voices)
+            voices.setAmpSustain(newValue); 
     }
 
     void setAmpRelease(int newValue) 
     {
-        for (VoiceClass voice : voices)
-            voice.setAmpRelease(newValue); 
+        //for (VoiceClass voice : voices)
+            voices.setAmpRelease(newValue); 
     }
 
 };
